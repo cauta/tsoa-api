@@ -7,12 +7,10 @@
 		"IUserModel": {
 			"properties": {
 				"_id": {
-					"type": "string",
-					"x-nullable": true
+					"type": "string"
 				},
 				"id": {
-					"type": "string",
-					"x-nullable": true
+					"type": "string"
 				},
 				"email": {
 					"type": "string"
@@ -25,7 +23,8 @@
 				"email",
 				"name"
 			],
-			"type": "object"
+			"type": "object",
+			"additionalProperties": false
 		},
 		"IPaginationModel": {
 			"properties": {
@@ -46,10 +45,10 @@
 					"format": "double"
 				},
 				"docs": {
-					"type": "array",
 					"items": {
-						"type": "object"
-					}
+						"additionalProperties": true
+					},
+					"type": "array"
 				}
 			},
 			"required": [
@@ -59,7 +58,8 @@
 				"totalPages",
 				"docs"
 			],
-			"type": "object"
+			"type": "object",
+			"additionalProperties": false
 		}
 	},
 	"info": {
@@ -67,6 +67,10 @@
 		"version": "1.0.0",
 		"license": {
 			"name": "ISC"
+		},
+		"contact": {
+			"name": "Making Sense ",
+			"email": "servicesdevs@makingsense.com"
 		}
 	},
 	"paths": {
@@ -113,6 +117,9 @@
 						"description": "Bad request"
 					}
 				},
+				"consumes": [
+					"application/json"
+				],
 				"tags": [
 					"users"
 				],
@@ -225,8 +232,8 @@
 					"application/json"
 				],
 				"responses": {
-					"200": {
-						"description": "Ok",
+					"201": {
+						"description": "Created",
 						"schema": {
 							"$ref": "#/definitions/IUserModel"
 						}
@@ -235,6 +242,9 @@
 						"description": "Bad request"
 					}
 				},
+				"consumes": [
+					"application/json"
+				],
 				"tags": [
 					"users"
 				],
@@ -260,5 +270,20 @@
 		"application/json"
 	],
 	"swagger": "2.0",
-	"securityDefinitions": {}
+	"securityDefinitions": {
+		"api_key": {
+			"type": "apiKey",
+			"name": "access_token",
+			"in": "query"
+		},
+		"tsoa_auth": {
+			"type": "oauth2",
+			"authorizationUrl": "http://swagger.io/api/oauth/dialog",
+			"flow": "implicit",
+			"scopes": {
+				"write:pets": "modify things",
+				"read:pets": "read things"
+			}
+		}
+	}
 }
