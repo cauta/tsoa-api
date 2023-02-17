@@ -1,5 +1,5 @@
 import { decorate, injectable } from 'inversify';
-import { Schema, Model, Document } from 'mongoose';
+import mongoose, { Schema, Model, Document, SortOrder } from 'mongoose';
 import * as uniqueValidator from 'mongoose-unique-validator';
 
 import { IBaseRepository } from '../IBaseRepository';
@@ -19,7 +19,7 @@ export abstract class BaseRepository<EntityType> implements IBaseRepository<Enti
   /** this needs to be called after the extended class super is executed */
   protected init(): void {
     if (this.initiated) return;
-    this.documentModel = this.dbConnection.db.model(this.modelName, this.schema);
+    this.documentModel = mongoose.model<Document>(this.modelName, this.schema);
     this.schema.plugin(uniqueValidator);
     this.initiated = true;
   }
@@ -34,7 +34,7 @@ export abstract class BaseRepository<EntityType> implements IBaseRepository<Enti
   }
 
   public async delete(_id: string): Promise<{ n: number }> {
-    return this.documentModel.deleteOne({ _id });
+    return {n: (await this.documentModel.deleteOne({ _id })).deletedCount};
   }
 
   public async find(
@@ -44,10 +44,11 @@ export abstract class BaseRepository<EntityType> implements IBaseRepository<Enti
     query: any
   ): Promise<EntityType[]> {
     const sortObject = cleanQuery(sort, this.sortQueryFormatter);
+    const sortParam: [string, SortOrder][] = Object.keys(sortObject).map(key => [key, sortObject[key]])
     return (
       await this.documentModel
         .find(this.cleanWhereQuery(query))
-        .sort(Object.keys(sortObject).map(key => [key, sortObject[key]]))
+        .sort(sortParam)
         .skip(skip)
         .limit(limit)
     )

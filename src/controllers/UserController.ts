@@ -9,7 +9,8 @@ import {
   Query,
   Body,
   Response,
-  Tags
+  Tags,
+  SuccessResponse
 } from 'tsoa';
 
 import { ProvideSingleton, inject } from '../ioc';
@@ -39,6 +40,7 @@ export class UserController extends Controller {
     return this.service.getPaginated(page, limit, fields, sort, q);
   }
 
+  @SuccessResponse("201", "Created") // Custom success response
   @Response(400, 'Bad request')
   @Security('admin')
   @Post()

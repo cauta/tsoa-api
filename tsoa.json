@@ -1,16 +1,36 @@
 {
-  "swagger": {
-    "entryFile": "./build/routes.ts",
-    "outputDirectory": "./build/swagger",
-    "specMerging": "recursive",
-    "spec": {}
-  },
+  "entryFile": "src/controllers/index.ts",
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "controllerPathGlobs": ["src/**/*Controller.ts"],
   "routes": {
-    "entryFile": "./src/controllers/index.ts",
-    "routesDir": "./build",
-    "basePath": "/service/",
+    "routesDir": "build",
     "authenticationModule": "./src/auth.ts",
     "middleware": "express",
     "iocModule": "./src/ioc"
+  },
+
+  "spec": {
+    "entryFile": "./build/routes.ts",
+    "outputDirectory": "./build/swagger",
+    "specMerging": "recursive",
+    "controllerPathGlobs": [
+      "./src/controllers/*Controller.ts"
+    ],
+    "securityDefinitions": {
+        "api_key": {
+            "type": "apiKey",
+            "name": "access_token",
+            "in": "query"
+        },
+        "tsoa_auth": {
+            "type": "oauth2",
+            "authorizationUrl": "http://swagger.io/api/oauth/dialog",
+            "flow": "implicit",
+            "scopes": {
+                "write:pets": "modify things",
+                "read:pets": "read things"
+            }
+        }
+    }
   }
 }
