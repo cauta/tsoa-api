@@ -6,7 +6,8 @@
     "routesDir": "build",
     "authenticationModule": "./src/auth.ts",
     "middleware": "express",
-    "iocModule": "./src/ioc"
+    "iocModule": "./src/ioc",
+    "basePath": "/service"
   },
 
   "spec": {
