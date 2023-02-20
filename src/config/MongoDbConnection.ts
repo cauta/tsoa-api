@@ -13,6 +13,11 @@ export class MongoDbConnection {
 
   constructor() {
     Logger.log(`connecting to ${constants.environment} MongoDb`);
-    this.db = mongoose.createConnection(this.connectionString);
+    mongoose.connect(this.connectionString);
+    this.db = mongoose.connection;
+    this.db.on("error", console.error.bind(console, "this.db mongo connection error: "));
+    this.db.once("open", function () {
+      console.log("DB Mongo Connected successfully...");
+    });
   }
 }

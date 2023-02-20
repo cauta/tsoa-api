@@ -2,7 +2,6 @@ import { BaseFormatter } from './BaseFormatter';
 
 export interface IUserModel {
   _id?: string;
-  id?: string;
   email: string;
   name: string;
 }
