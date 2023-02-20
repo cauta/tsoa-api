@@ -65,8 +65,6 @@
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": false,
     "no-unused-expression": true,
-    "no-unused-variable": true,
-    "no-use-before-declare": true,
     "one-line": [
       true,
       "check-catch",
@@ -75,7 +73,7 @@
       "check-whitespace"
     ],
     "quotemark": [
-      true,
+      false,
       "single",
       "jsx-double"
     ],

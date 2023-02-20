@@ -6,11 +6,12 @@ import { Logger } from '../../../config/Logger';
 describe('Logger', () => {
   const exampleInput = { a: 1 };
   const exampleOutput = (Logger as any).formatArgs(exampleInput);
-  const debugStub = Logger.console.debug = stub();
-  const warnStub = Logger.console.warn = stub();
-  const errorStub = Logger.console.error = stub();
-  const infoStub = Logger.console.info = stub();
-  const verboseStub = Logger.console.verbose = stub();
+  // let debug  : any = Logger.console.debug;
+  const debugStub = stub(Logger.console, "debug");
+  const warnStub = stub(Logger.console, "warn");
+  const errorStub = stub(Logger.console, "error");
+  const infoStub = stub( Logger.console, "info");
+  const verboseStub = stub( Logger.console, "verbose");
   before(() => {
     (Logger as any).shouldLog = true;
   });

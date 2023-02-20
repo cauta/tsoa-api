@@ -24,7 +24,7 @@
 				"name"
 			],
 			"type": "object",
-			"additionalProperties": false
+			"additionalProperties": true
 		},
 		"IPaginationModel": {
 			"properties": {
@@ -59,7 +59,7 @@
 				"docs"
 			],
 			"type": "object",
-			"additionalProperties": false
+			"additionalProperties": true
 		}
 	},
 	"info": {

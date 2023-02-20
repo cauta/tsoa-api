@@ -44,7 +44,7 @@ export abstract class BaseRepository<EntityType> implements IBaseRepository<Enti
     query: any
   ): Promise<EntityType[]> {
     const sortObject = cleanQuery(sort, this.sortQueryFormatter);
-    const sortParam: [string, SortOrder][] = Object.keys(sortObject).map(key => [key, sortObject[key]])
+    const sortParam: [string, SortOrder][] = Object.keys(sortObject).map(key => [key, sortObject[key]]);
     return (
       await this.documentModel
         .find(this.cleanWhereQuery(query))

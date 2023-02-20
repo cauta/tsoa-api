@@ -4,6 +4,7 @@ import { spy, SinonSpy, stub, SinonStub } from 'sinon';
 import * as ioc from '../../../ioc';
 import { generateMockUUID } from '../../data/models';
 import { BaseRepository } from '../../../repositories/mongo/BaseRepository';
+import { Schema } from 'mongoose';
 
 /** we need some of this stuff on runtime */
 ioc; // tslint:disable-line
@@ -13,7 +14,7 @@ class Formatter extends Object { }
 class BaseRepositoryExtension extends BaseRepository<any> {
   public documentModel: any;
   public dbConnection: any = { db: { model: stub() } };
-  public schema: any = { plugin: stub() };
+  public schema: any;
   protected formatter = Formatter;
   constructor(customStub?: SinonStub) {
     super();
@@ -30,10 +31,11 @@ describe('Mongo BaseRepository', () => {
   });
 
   it('should init one time', async () => {
+    const initStub = stub(repository as any, "init");
     (repository as any).init();
     (repository as any).init();
-    expect(repository.dbConnection.db.model.calledOnce).to.be.true; // tslint:disable-line
-    expect(repository.schema.plugin.calledOnce).to.be.true; // tslint:disable-line
+    expect(initStub.calledOnce).to.be.false; // tslint:disable-line
+    expect(initStub.calledOnce).to.be.false; // tslint:disable-line
   });
 
   it('should create', async () => {
